@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
- * Copyright (C) 2013 - 2024 Intel Corporation
+ * Copyright (C) 2013 - 2025 Intel Corporation
  */
 
 #include <asm/cpu_device_id.h>
@@ -1099,8 +1099,10 @@ EXPORT_SYMBOL_NS_GPL(ipu_buttress_wakeup_ps_uc, INTEL_IPU7);
 static const struct x86_cpu_id ipu_misc_cfg_exclusion[] = {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 14, 0)
 	X86_MATCH_VFM_STEPS(INTEL_PANTHERLAKE_L, 0x1, 0x1, 0),
-#else
+#elif LINUX_VERSION_CODE >= KERNEL_VERSION(6, 12, 0)
 	X86_MATCH_VFM_STEPPINGS(INTEL_PANTHERLAKE_L, 0x1, 0),
+#else
+	X86_MATCH_VFM_STEPPINGS(0x6cc, 0x1, 0),
 #endif
 	{},
 };
