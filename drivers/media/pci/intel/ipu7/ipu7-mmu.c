@@ -578,7 +578,11 @@ int ipu7_mmu_hw_init(struct ipu7_mmu *mmu)
 
 	return 0;
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_mmu_hw_init, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_mmu_hw_init, INTEL_IPU7);
+#endif
 
 static struct ipu7_mmu_info *ipu7_mmu_alloc(struct ipu7_device *isp)
 {
@@ -648,7 +652,11 @@ void ipu7_mmu_hw_cleanup(struct ipu7_mmu *mmu)
 	mmu->ready = false;
 	spin_unlock_irqrestore(&mmu->ready_lock, flags);
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_mmu_hw_cleanup, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_mmu_hw_cleanup, INTEL_IPU7);
+#endif
 
 static struct ipu7_dma_mapping *alloc_dma_mapping(struct ipu7_device *isp)
 {

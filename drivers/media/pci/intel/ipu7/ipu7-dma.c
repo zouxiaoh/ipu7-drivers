@@ -131,7 +131,11 @@ void ipu7_dma_sync_single(struct ipu7_bus_device *sys, dma_addr_t dma_handle,
 	vaddr = info->vaddr + offset;
 	clflush_cache_range(vaddr, size);
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_sync_single, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_sync_single, INTEL_IPU7);
+#endif
 
 void ipu7_dma_sync_sg(struct ipu7_bus_device *sys, struct scatterlist *sglist,
 		      unsigned int nents)
@@ -142,13 +146,21 @@ void ipu7_dma_sync_sg(struct ipu7_bus_device *sys, struct scatterlist *sglist,
 	for_each_sg(sglist, sg, nents, i)
 		clflush_cache_range(sg_virt(sg), sg->length);
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_sync_sg, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_sync_sg, INTEL_IPU7);
+#endif
 
 void ipu7_dma_sync_sgtable(struct ipu7_bus_device *sys, struct sg_table *sgt)
 {
 	ipu7_dma_sync_sg(sys, sgt->sgl, sgt->orig_nents);
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_sync_sgtable, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_sync_sgtable, INTEL_IPU7);
+#endif
 
 void *ipu7_dma_alloc(struct ipu7_bus_device *sys, size_t size,
 		     dma_addr_t *dma_handle, gfp_t gfp,
@@ -240,7 +252,11 @@ out_kfree:
 
 	return NULL;
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_alloc, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_alloc, INTEL_IPU7);
+#endif
 
 void ipu7_dma_free(struct ipu7_bus_device *sys, size_t size, void *vaddr,
 		   dma_addr_t dma_handle, unsigned long attrs)
@@ -293,7 +309,11 @@ void ipu7_dma_free(struct ipu7_bus_device *sys, size_t size, void *vaddr,
 
 	kfree(info);
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_free, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_free, INTEL_IPU7);
+#endif
 
 int ipu7_dma_mmap(struct ipu7_bus_device *sys, struct vm_area_struct *vma,
 		  void *addr, dma_addr_t iova, size_t size,
@@ -370,7 +390,11 @@ void ipu7_dma_unmap_sg(struct ipu7_bus_device *sys, struct scatterlist *sglist,
 	mmu->tlb_invalidate(mmu);
 	__free_iova(&mmu->dmap->iovad, iova);
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_unmap_sg, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_unmap_sg, INTEL_IPU7);
+#endif
 
 int ipu7_dma_map_sg(struct ipu7_bus_device *sys, struct scatterlist *sglist,
 		    int nents, enum dma_data_direction dir,
@@ -452,7 +476,11 @@ out_fail:
 
 	return 0;
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_map_sg, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_map_sg, INTEL_IPU7);
+#endif
 
 int ipu7_dma_map_sgtable(struct ipu7_bus_device *sys, struct sg_table *sgt,
 			 enum dma_data_direction dir, unsigned long attrs)
@@ -467,14 +495,22 @@ int ipu7_dma_map_sgtable(struct ipu7_bus_device *sys, struct sg_table *sgt,
 
 	return 0;
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_map_sgtable, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_map_sgtable, INTEL_IPU7);
+#endif
 
 void ipu7_dma_unmap_sgtable(struct ipu7_bus_device *sys, struct sg_table *sgt,
 			    enum dma_data_direction dir, unsigned long attrs)
 {
 	ipu7_dma_unmap_sg(sys, sgt->sgl, sgt->nents, dir, attrs);
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dma_unmap_sgtable, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dma_unmap_sgtable, INTEL_IPU7);
+#endif
 
 /*
  * Create scatter-list for the already allocated DMA buffer

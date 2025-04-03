@@ -206,7 +206,11 @@ int ipu7_cpd_validate_cpd_file(struct ipu7_device *isp, const void *cpd_file,
 
 	return 0;
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_cpd_validate_cpd_file, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_cpd_validate_cpd_file, INTEL_IPU7);
+#endif
 
 int ipu7_cpd_copy_binary(const void *cpd, const char *name,
 			 void *code_region, u32 *entry)
@@ -229,4 +233,8 @@ int ipu7_cpd_copy_binary(const void *cpd, const char *name,
 
 	return -ENOENT;
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_cpd_copy_binary, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_cpd_copy_binary, INTEL_IPU7);
+#endif

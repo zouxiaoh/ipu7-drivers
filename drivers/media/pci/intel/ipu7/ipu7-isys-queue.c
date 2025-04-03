@@ -1045,6 +1045,10 @@ void ipu7_isys_queue_buf_ready(struct ipu7_isys_stream *stream,
 
 static const struct vb2_ops ipu7_isys_queue_ops = {
 	.queue_setup = ipu7_isys_queue_setup,
+#if LINUX_VERSION_CODE <= KERNEL_VERSION(6, 12, 255)
+	.wait_prepare = vb2_ops_wait_prepare,
+	.wait_finish = vb2_ops_wait_finish,
+#endif
 	.buf_init = ipu7_isys_buf_init,
 	.buf_prepare = ipu7_isys_buf_prepare,
 	.buf_cleanup = ipu7_isys_buf_cleanup,

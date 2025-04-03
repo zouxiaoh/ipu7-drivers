@@ -1397,5 +1397,10 @@ MODULE_AUTHOR("Tianshu Qiu <tian.shu.qiu@intel.com>");
 MODULE_AUTHOR("Qingwu Zhang <qingwu.zhang@intel.com>");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Intel ipu7 input system driver");
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 MODULE_IMPORT_NS("INTEL_IPU7");
 MODULE_IMPORT_NS("INTEL_IPU_BRIDGE");
+#else
+MODULE_IMPORT_NS(INTEL_IPU7);
+MODULE_IMPORT_NS(INTEL_IPU_BRIDGE);
+#endif

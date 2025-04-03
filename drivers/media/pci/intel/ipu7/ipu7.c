@@ -2262,7 +2262,11 @@ void ipu7_dump_fw_error_log(const struct ipu7_bus_device *adev)
 	memcpy_fromio(&fw_error_log[adev->subsys], reg,
 		      sizeof(fw_error_log[adev->subsys]));
 }
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 EXPORT_SYMBOL_NS_GPL(ipu7_dump_fw_error_log, "INTEL_IPU7");
+#else
+EXPORT_SYMBOL_NS_GPL(ipu7_dump_fw_error_log, INTEL_IPU7);
+#endif
 
 #ifdef CONFIG_DEBUG_FS
 static struct debugfs_blob_wrapper isys_fw_error;
@@ -2855,7 +2859,11 @@ static struct pci_driver ipu7_pci_driver = {
 
 module_pci_driver(ipu7_pci_driver);
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 13, 0)
 MODULE_IMPORT_NS("INTEL_IPU_BRIDGE");
+#else
+MODULE_IMPORT_NS(INTEL_IPU_BRIDGE);
+#endif
 MODULE_AUTHOR("Bingbu Cao <bingbu.cao@intel.com>");
 MODULE_AUTHOR("Tianshu Qiu <tian.shu.qiu@intel.com>");
 MODULE_AUTHOR("Qingwu Zhang <qingwu.zhang@intel.com>");
